@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Selector de categorías -->
+<div>
+    <h3>Categorías:</h3>
+    {% for cat in categorias %}
+        <a href="{{ url_for('index', categoria=cat) }}">
+            <button type="button">{{ cat }}</button>
+        </a>
+    {% endfor %}
+</div>
+
+<hr>
+
+<!-- Formulario para agregar tarea -->
+<h2>➕ Nueva Tarea</h2>
+<form action="{{ url_for('agregar_tarea') }}" method="POST">
+    <input type="hidden" name="categoria" value="{{ categoria_actual }}">
+
+    <label for="nombre">Nombre de la tarea:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Ej: Realizar informe trimestral" required>
+    <br><br>
+
+    <label for="prioridad">Prioridad:</label>
+    <select id="prioridad" name="prioridad">
+        <option value="Alta">Alta</option>
+        <option value="Media" selected>Media</option>
+        <option value="Baja">Baja</option>
+    </select>
+    <br><br>
+
+    <label for="fecha_limite">Fecha límite:</label>
+    <input type="date" id="fecha_limite" name="fecha_limite" required>
+    <br><br>
+
+    <button type="submit">Agregar Tarea</button>
+</form>
+
+<hr>
+
+<!-- Lista de tareas -->
+<h2>Mis Tareas - {{ categoria_actual }}</h2>
+
+{% if tareas %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tarea</th>
+                <th>Prioridad</th>
+                <th>Fecha límite</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarea in tareas %}
+            <tr>
+                <td>{{ tarea.id }}</td>
+                <td>{{ tarea.nombre }}</td>
+                <td>
+                    {% if tarea.prioridad == "Alta" %}🔴 Alta
+                    {% elif tarea.prioridad == "Media" %}🟡 Media
+                    {% else %}🟢 Baja
+                    {% endif %}
+                </td>
+                <td>{{ tarea.fecha_limite }}</td>
+                <td>
+                    <a href="{{ url_for('editar_tarea_form', tarea_id=tarea.id, categoria=categoria_actual) }}">Editar</a>
+                    |
+                    <a href="{{ url_for('eliminar_tarea', tarea_id=tarea.id, categoria=categoria_actual) }}" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="{{ url_for('limpiar_categoria', categoria=categoria_actual) }}" onclick="return confirm('¿Eliminar TODAS las tareas de {{ categoria_actual }}?')">
+        <button type="button">Limpiar agenda completa</button>
+    </a>
+
+{% else %}
+    <p>No hay tareas en {{ categoria_actual }}</p>
+    <p>¡Agrega tu primera tarea usando el formulario!</p>
+{% endif %}
+
+<br><br>
+<a href="{{ url_for('api_obtener_tareas') }}">Ver API JSON</a>
+{% endblock %}
