@@ -1,3 +1,3 @@
 # Omar Daniel Ortega Valtierra 
-# 23308060610674 
+# Miguel Angel Pineda Becerra
 # 6D
