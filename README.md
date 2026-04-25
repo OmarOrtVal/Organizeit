@@ -10,34 +10,34 @@
     2.4 Diseño de interfaz
     2.5 Arquitectura
     2.6 Diagrama de flujo
-  CAPÍTULO 3: DESARROLLO
+   ####  CAPÍTULO 3: DESARROLLO
     3.1 Tecnologías
     3.2 Estructura del proyecto
     3.3 Backend (Flask)
     3.4 Frontend (HTML)
     3.5 Persistencia de datos
     3.6 Capturas de pantalla
-  CAPÍTULO 4: PRUEBAS Y RESULTADOS
+   ####  CAPÍTULO 4: PRUEBAS Y RESULTADOS
     4.1 Metodología
     4.2 Escenarios de prueba
     4.3 Resultados
     4.4 Evaluación con usuarios
     4.5 Mejoras identificadas
-2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
-3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
-4. Justificación: Explicas por qué vale la pena tu proyecto 
-5. Prólogo: Cuentas tus motivos personales y agradeces 
-6. Prefacio: Explicas al lector de qué trata el documento 
-7. Presentación: Objetivos generales y lo que esperas ofrecer 
-8. Epígrafes: Frases cortas al inicio de cada capítulo 
-10. Índice: Se genera automáticamente AL FINAL 
-11. Anexos: Código, capturas, manual de usuario 
-12. Glosario: Definición de términos técnicos 
-13. Bibliografía: Fuentes que consultaste 
-14. Carta trámite: Autorización del proyecto 
+### 2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
+### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
+### 4. Justificación: Explicas por qué vale la pena tu proyecto 
+### 5. Prólogo: Cuentas tus motivos personales y agradeces 
+### 6. Prefacio: Explicas al lector de qué trata el documento 
+### 7. Presentación: Objetivos generales y lo que esperas ofrecer 
+### 8. Epígrafes: Frases cortas al inicio de cada capítulo 
+### 10. Índice: Se genera automáticamente AL FINAL 
+### 11. Anexos: Código, capturas, manual de usuario 
+### 12. Glosario: Definición de términos técnicos 
+### 13. Bibliografía: Fuentes que consultaste 
+### 14. Carta trámite: Autorización del proyecto 
 
-Encuesta:
+#### Encuesta:
 https://docs.google.com/forms/d/e/1FAIpQLSfeE1aUapjrOI5aOQjcQmDXnYXFEGPAxZQbkO8C5TbJ-S-9vg/viewform?usp=publish-editor
 
-Fuentes:
+#### Fuentes:
 George A. Miller - "The Magical Number Seven, Plus or Minus Two"
