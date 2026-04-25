@@ -2,12 +2,13 @@
 # Omar Daniel Ortega Valtierra 
 # Miguel Angel Pineda Becerra
 # 6D
+#### Tesis: 
+https://1drv.ms/w/c/9835c92adf5dc840/IQA-TKgTx6_WS4YXTQEdm2S9AWOuuOx_Yp2NvrEEsSYQcm4?e=5S2Rzi
 ### Nombre de la app: Organizelt
 ### Tipo de app: Escritorio 
 ### ORDEN DE CREACIÓN 
 ### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
-    2.4 Diseño de interfaz
     2.5 Arquitectura
     2.6 Diagrama de flujo
    ####  CAPÍTULO 3: DESARROLLO
