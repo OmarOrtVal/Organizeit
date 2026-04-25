@@ -3,10 +3,10 @@
 # Miguel Angel Pineda Becerra
 # 6D
 ### Nombre de la app: Organizelt
-Tipo de app: Escritorio 
-ORDEN DE CREACIÓN 
-1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
-  CAPÍTULO 2: DISEÑO DEL SISTEMA
+### Tipo de app: Escritorio 
+### ORDEN DE CREACIÓN 
+### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
+  #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.4 Diseño de interfaz
     2.5 Arquitectura
     2.6 Diagrama de flujo
