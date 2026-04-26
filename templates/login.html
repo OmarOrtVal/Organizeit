@@ -2,7 +2,7 @@
 {% block title %}Iniciar Sesión - OrganizeIt{% endblock %}
 {% block content %}
 
-<h2>🔐 Iniciar Sesión</h2>
+<h2>Iniciar Sesión</h2>
 <p>Accede a tu cuenta para gestionar tus tareas</p>
 
 {% if error %}
@@ -18,13 +18,12 @@
     <input type="password" id="password_login" name="password_login" 
         placeholder="Ingresa tu contraseña" required>
     
-    <button type="submit">✅ Ingresar</button>
+    <button type="submit">Ingresar</button>
 </form>
 
 <br>
 <div style="text-align: center;">
     <p>¿No tienes cuenta? <a href="{{ url_for('registrar') }}"><strong>Regístrate aquí</strong></a></p>
-    <p>⚡ <strong>Usuario demo:</strong> demo@organizeit.com / demo123</p>
 </div>
 
 {% endblock %}

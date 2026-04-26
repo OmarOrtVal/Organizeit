@@ -2,25 +2,82 @@
 {% block title %}Inicio - OrganizeIt{% endblock %}
 {% block content %}
 
-<h2>🏠 Bienvenido a OrganizeIt</h2>
-<p>Tu gestor de tareas personal para organizar, priorizar y cumplir tus objetivos.</p>
+{% if user_logged_in %}
+    <h2>Bienvenido/a, {{ user_nombre }}!</h2>
+    
+    <!-- Resumen por categorías -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 10px;">
+            <h3>Trabajo/Escuela</h3>
+            <p style="font-size: 2em; margin: 10px 0;">
+                {% set trabajo_count = categorias_count | selectattr('0', 'equalto', 'trabajo') | list %}
+                {{ trabajo_count[0][1] if trabajo_count else 0 }}
+            </p>
+            <p>tareas pendientes</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #4299e1, #3182ce); color: white; padding: 20px; border-radius: 10px;">
+            <h3>Hogar</h3>
+            <p style="font-size: 2em; margin: 10px 0;">
+                {% set hogar_count = categorias_count | selectattr('0', 'equalto', 'hogar') | list %}
+                {{ hogar_count[0][1] if hogar_count else 0 }}
+            </p>
+            <p>tareas pendientes</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #ed8936, #dd6b20); color: white; padding: 20px; border-radius: 10px;">
+            <h3>Personal</h3>
+            <p style="font-size: 2em; margin: 10px 0;">
+                {% set personal_count = categorias_count | selectattr('0', 'equalto', 'personal') | list %}
+                {{ personal_count[0][1] if personal_count else 0 }}
+            </p>
+            <p>tareas pendientes</p>
+        </div>
+    </div>
+    
+    {% if tareas_prioritarias %}
+        <h3>Tareas Prioritarias</h3>
+        {% for tarea in tareas_prioritarias %}
+            <div style="background-color: white; border-left: 5px solid #c53030; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
+                <strong>{{ tarea[1] }}</strong>
+                <span style="background-color: {% if tarea[2] == 'trabajo' %}#e9d8fd{% elif tarea[2] == 'hogar' %}#bee3f8{% else %}#fbd38d{% endif %}; 
+                            padding: 3px 8px; border-radius: 3px; font-size: 12px; margin-left: 10px;">
+                    {% if tarea[2] == 'trabajo' %}Trabajo
+                    {% elif tarea[2] == 'hogar' %}Hogar
+                    {% else %}Personal{% endif %}
+                </span>
+                <span style="margin-left: 10px;">{{ tarea[4] if tarea[4] else 'Sin fecha' }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/editar">
+            <button>Ir al Gestor de Tareas</button>
+        </a>
+    </div>
+    
+{% else %}
+    <h2>Bienvenido a OrganizeIt</h2>
+    <p>Tu gestor de tareas personal para organizar, priorizar y cumplir tus objetivos.</p>
 
-<h3>📌 Funciones principales:</h3>
-<ul>
-    <li>✅ Crear y gestionar tareas</li>
-    <li>📂 Categorizar por prioridad y tipo</li>
-    <li>📅 Establecer fechas límite</li>
-    <li>📊 Ver progreso de tus actividades</li>
-</ul>
+    <h3>Funciones principales:</h3>
+    <ul>
+        <li>Crear y gestionar tareas</li>
+        <li>Categorizar por prioridad y tipo</li>
+        <li>Establecer fechas límite</li>
+        <li>Ver progreso de tus actividades</li>
+    </ul>
 
-<br>
-<div style="text-align: center;">
-    <a href="/login">
-        <button>🔐 Iniciar Sesión</button>
-    </a>
-    <a href="/registrar">
-        <button class="btn-secondary">📝 Registrarse</button>
-    </a>
-</div>
+    <br>
+    <div style="text-align: center;">
+        <a href="/login">
+            <button>Iniciar Sesión</button>
+        </a>
+        <a href="/registrar">
+            <button class="btn-secondary">Registrarse</button>
+        </a>
+    </div>
+{% endif %}
 
 {% endblock %}
