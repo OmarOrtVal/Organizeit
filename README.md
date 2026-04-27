@@ -11,6 +11,7 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### ORDEN DE CREACIÓN 
 ### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
+    2.4 Diseño de interfaz
     2.5 Arquitectura
     2.6 Diagrama de flujo
    ####  CAPÍTULO 3: DESARROLLO
