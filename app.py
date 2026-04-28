@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'organizeit_secret_key_2024'
@@ -12,13 +14,26 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'organizeit'
 
+# Configuración para subida de archivos
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+# Crear carpeta de uploads si no existe
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
 mysql = MySQL(app)
 
+def allowed_file(filename):
+    """Verifica si el archivo tiene una extensión permitida"""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def crear_tablas():
-    """Crear las tablas si no existen"""
+    """Crear las tablas si no existen y añadir campo de imagen"""
     try:
         cursor = mysql.connection.cursor()
         
+        # Crear tabla de usuarios
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
                 id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,6 +44,7 @@ def crear_tablas():
             )
         ''')
         
+        # Crear tabla de tareas con campo para imagen
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS tareas (
                 id_tarea INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,18 +55,27 @@ def crear_tablas():
                 usuario_email VARCHAR(100) NOT NULL,
                 fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 completada BOOLEAN DEFAULT FALSE,
+                imagen_url TEXT,
                 FOREIGN KEY (usuario_email) REFERENCES usuarios(email) 
                     ON DELETE CASCADE ON UPDATE CASCADE
             )
         ''')
         
+        # Si la tabla ya existe pero no tiene el campo imagen_url, lo añade
+        try:
+            cursor.execute('ALTER TABLE tareas ADD COLUMN imagen_url TEXT')
+            print("Columna imagen_url añadida exitosamente")
+        except Exception:
+            pass  # La columna ya existe
+        
         mysql.connection.commit()
-        print("Tablas creadas exitosamente")
+        print("Tablas creadas/actualizadas exitosamente")
     except Exception as e:
         print(f"Error creando tablas: {e}")
 
 @app.route('/')
 def index():
+    """Página principal - Muestra resumen de tareas"""
     if 'user_email' in session:
         try:
             cursor = mysql.connection.cursor()
@@ -65,16 +90,17 @@ def index():
             
             categorias_count = cursor.fetchall()
             
-            # Tareas prioritarias
+            # Tareas prioritarias (alta prioridad)
             cursor.execute('''
                 SELECT 
                     id_tarea,
                     nombre_tarea,
                     categoria,
                     prioridad,
-                    COALESCE(fecha_limite, 'Sin fecha') as fecha_limite,
-                    DATE_FORMAT(fecha_creacion, '%Y-%m-%d %H:%i') as fecha_creacion,
-                    completada
+                    COALESCE(DATE_FORMAT(fecha_limite, '%%Y-%%m-%%d'), 'Sin fecha') as fecha_limite,
+                    DATE_FORMAT(fecha_creacion, '%%Y-%%m-%%d %%H:%%i') as fecha_creacion,
+                    completada,
+                    imagen_url
                 FROM tareas 
                 WHERE usuario_email = %s AND prioridad = 'alta' AND completada = FALSE
                 ORDER BY fecha_limite ASC
@@ -83,16 +109,46 @@ def index():
             
             tareas_prioritarias = cursor.fetchall()
             
+            # Últimas 5 tareas agregadas
+            cursor.execute('''
+                SELECT 
+                    id_tarea,
+                    nombre_tarea,
+                    categoria,
+                    prioridad,
+                    COALESCE(DATE_FORMAT(fecha_limite, '%%Y-%%m-%%d'), 'Sin fecha') as fecha_limite,
+                    DATE_FORMAT(fecha_creacion, '%%Y-%%m-%%d') as fecha_creacion,
+                    completada,
+                    imagen_url
+                FROM tareas 
+                WHERE usuario_email = %s
+                ORDER BY fecha_creacion DESC
+                LIMIT 5
+            ''', (session['user_email'],))
+            
+            ultimas_tareas = cursor.fetchall()
+            
             return render_template('index.html', 
                                 categorias_count=categorias_count,
-                                tareas_prioritarias=tareas_prioritarias)
+                                tareas_prioritarias=tareas_prioritarias,
+                                ultimas_tareas=ultimas_tareas)
         except Exception as e:
             flash(f'Error al cargar datos: {str(e)}', 'error')
     
     return render_template('index.html')
 
-@app.route('/editar')
-def editar():
+@app.route('/crear_tarea')
+def crear_tarea():
+    """Página para crear nuevas tareas"""
+    if 'user_email' not in session:
+        flash('Debes iniciar sesión para crear tareas', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('crear_tarea.html')
+
+@app.route('/gestor_tareas')
+def gestor_tareas():
+    """Página para gestionar todas las tareas (listar, editar, eliminar)"""
     if 'user_email' not in session:
         flash('Debes iniciar sesión para gestionar tareas', 'error')
         return redirect(url_for('login'))
@@ -100,16 +156,17 @@ def editar():
     try:
         cursor = mysql.connection.cursor()
         
-        # Obtener todas las tareas con fechas formateadas
+        # Obtener todas las tareas incluyendo la imagen
         cursor.execute('''
             SELECT 
                 id_tarea,
                 nombre_tarea,
                 categoria,
                 prioridad,
-                COALESCE(DATE_FORMAT(fecha_limite, '%Y-%m-%d'), 'Sin fecha') as fecha_limite,
-                DATE_FORMAT(fecha_creacion, '%Y-%m-%d %H:%i') as fecha_creacion,
-                completada
+                COALESCE(DATE_FORMAT(fecha_limite, '%%Y-%%m-%%d'), 'Sin fecha') as fecha_limite,
+                DATE_FORMAT(fecha_creacion, '%%Y-%%m-%%d %%H:%%i') as fecha_creacion,
+                completada,
+                imagen_url
             FROM tareas 
             WHERE usuario_email = %s 
             ORDER BY fecha_creacion DESC
@@ -117,13 +174,14 @@ def editar():
         
         tareas = cursor.fetchall()
         
-        return render_template('editar.html', tareas=tareas)
+        return render_template('gestor_tareas.html', tareas=tareas)
     except Exception as e:
         flash(f'Error al cargar tareas: {str(e)}', 'error')
-        return render_template('editar.html', tareas=[])
+        return render_template('gestor_tareas.html', tareas=[])
 
 @app.route('/agregar_tarea', methods=['POST'])
 def agregar_tarea():
+    """Agrega una nueva tarea con opción de imagen"""
     if 'user_email' not in session:
         return redirect(url_for('login'))
     
@@ -133,16 +191,28 @@ def agregar_tarea():
         prioridad = request.form.get('prioridad')
         fecha_limite = request.form.get('fecha_limite')
         
+        # Procesar la imagen subida
+        imagen_url = None
+        if 'imagen' in request.files:
+            archivo = request.files['imagen']
+            if archivo and archivo.filename and allowed_file(archivo.filename):
+                # Generar nombre único para el archivo
+                timestamp = datetime.now().timestamp()
+                filename = secure_filename(f"{session['user_email']}_{timestamp}_{archivo.filename}")
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                archivo.save(filepath)
+                imagen_url = url_for('static', filename=f'uploads/{filename}')
+        
         if not all([tarea_texto, categoria, prioridad]):
             flash('Por favor completa todos los campos obligatorios', 'error')
-            return redirect(url_for('editar'))
+            return redirect(url_for('crear_tarea'))
         
         cursor = mysql.connection.cursor()
         cursor.execute('''
-            INSERT INTO tareas (nombre_tarea, categoria, prioridad, fecha_limite, usuario_email)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO tareas (nombre_tarea, categoria, prioridad, fecha_limite, usuario_email, imagen_url)
+            VALUES (%s, %s, %s, %s, %s, %s)
         ''', (tarea_texto, categoria, prioridad, 
-            fecha_limite if fecha_limite else None, session['user_email']))
+            fecha_limite if fecha_limite else None, session['user_email'], imagen_url))
         
         mysql.connection.commit()
         flash('Tarea agregada exitosamente', 'success')
@@ -151,51 +221,91 @@ def agregar_tarea():
         mysql.connection.rollback()
         flash(f'Error al agregar tarea: {str(e)}', 'error')
     
-    return redirect(url_for('editar'))
+    return redirect(url_for('gestor_tareas'))
 
 @app.route('/eliminar_tarea/<int:tarea_id>', methods=['POST'])
 def eliminar_tarea(tarea_id):
+    """Elimina una tarea específica"""
     if 'user_email' not in session:
         return redirect(url_for('login'))
     
     try:
         cursor = mysql.connection.cursor()
+        
+        # Obtener la URL de la imagen antes de eliminar
+        cursor.execute('SELECT imagen_url FROM tareas WHERE id_tarea = %s AND usuario_email = %s', 
+                      (tarea_id, session['user_email']))
+        resultado = cursor.fetchone()
+        
+        # Eliminar la tarea
         cursor.execute('''
             DELETE FROM tareas 
             WHERE id_tarea = %s AND usuario_email = %s
         ''', (tarea_id, session['user_email']))
         
         mysql.connection.commit()
+        
+        # Eliminar el archivo de imagen si existe
+        if resultado and resultado[0]:
+            try:
+                # Extraer el nombre del archivo de la URL
+                imagen_path = resultado[0].replace(url_for('static', filename=''), '')
+                imagen_path = os.path.join('static', imagen_path)
+                if os.path.exists(imagen_path):
+                    os.remove(imagen_path)
+            except Exception:
+                pass  # Si no se puede eliminar la imagen, continuar
+        
         flash('Tarea eliminada correctamente', 'success')
         
     except Exception as e:
         mysql.connection.rollback()
         flash(f'Error al eliminar tarea: {str(e)}', 'error')
     
-    return redirect(url_for('editar'))
+    return redirect(url_for('gestor_tareas'))
 
 @app.route('/limpiar_agenda', methods=['POST'])
 def limpiar_agenda():
+    """Elimina todas las tareas del usuario y sus imágenes asociadas"""
     if 'user_email' not in session:
         return redirect(url_for('login'))
     
     try:
         cursor = mysql.connection.cursor()
+        
+        # Obtener todas las URLs de las imágenes antes de eliminar
+        cursor.execute('SELECT imagen_url FROM tareas WHERE usuario_email = %s', (session['user_email'],))
+        imagenes = cursor.fetchall()
+        
+        # Eliminar todas las tareas del usuario
         cursor.execute('''
             DELETE FROM tareas WHERE usuario_email = %s
         ''', (session['user_email'],))
         
         mysql.connection.commit()
-        flash(' Agenda limpiada completamente', 'success')
+        
+        # Eliminar los archivos de imágenes
+        for imagen in imagenes:
+            if imagen[0]:
+                try:
+                    imagen_path = imagen[0].replace(url_for('static', filename=''), '')
+                    imagen_path = os.path.join('static', imagen_path)
+                    if os.path.exists(imagen_path):
+                        os.remove(imagen_path)
+                except Exception:
+                    pass  # Si no se puede eliminar la imagen, continuar
+        
+        flash('Agenda limpiada completamente', 'success')
         
     except Exception as e:
         mysql.connection.rollback()
-        flash(f' Error al limpiar agenda: {str(e)}', 'error')
+        flash(f'Error al limpiar agenda: {str(e)}', 'error')
     
-    return redirect(url_for('editar'))
+    return redirect(url_for('gestor_tareas'))
 
 @app.route('/toggle_tarea/<int:tarea_id>', methods=['POST'])
 def toggle_tarea(tarea_id):
+    """Cambia el estado completado/no completado de una tarea"""
     if 'user_email' not in session:
         return jsonify({'success': False, 'error': 'No autorizado'})
     
@@ -227,6 +337,7 @@ def toggle_tarea(tarea_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Inicio de sesión de usuarios"""
     if request.method == 'POST':
         email = request.form.get('email_login')
         password = request.form.get('password_login')
@@ -263,6 +374,7 @@ def login():
 
 @app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
+    """Registro de nuevos usuarios"""
     if request.method == 'POST':
         nombre = request.form.get('nombre')
         apellido = request.form.get('apellido')
@@ -312,12 +424,14 @@ def registrar():
 
 @app.route('/logout')
 def logout():
+    """Cierra la sesión del usuario"""
     session.clear()
     flash('Has cerrado sesión exitosamente.', 'info')
     return redirect(url_for('index'))
 
 @app.context_processor
 def inject_user():
+    """Inyecta variables de usuario en todas las plantillas"""
     return {
         'user_logged_in': 'user_email' in session,
         'user_nombre': session.get('user_nombre', 'Invitado')
@@ -327,4 +441,5 @@ if __name__ == '__main__':
     with app.app_context():
         crear_tablas()
         print("Servidor iniciado en http://localhost:5000")
+        print("Carpeta de uploads:", os.path.abspath('static/uploads'))
     app.run(debug=True)
