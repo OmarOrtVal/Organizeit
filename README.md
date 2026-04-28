@@ -1,5 +1,5 @@
 # Equipo 3
-# Omar Daniel Ortega Valtierra 
+# Omar Daniel Ortega Valtierra  contraseña:123456
 # Miguel Angel Pineda Becerra
 # 6D
 #### Tesis: 
