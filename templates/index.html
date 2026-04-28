@@ -36,7 +36,7 @@
     </div>
     
     {% if tareas_prioritarias %}
-        <h3>Tareas Prioritarias</h3>
+        <h3>📌 Tareas Prioritarias</h3>
         {% for tarea in tareas_prioritarias %}
             <div style="background-color: white; border-left: 5px solid #c53030; padding: 15px; margin-bottom: 10px; border-radius: 4px;">
                 <strong>{{ tarea[1] }}</strong>
@@ -46,14 +46,64 @@
                     {% elif tarea[2] == 'hogar' %}Hogar
                     {% else %}Personal{% endif %}
                 </span>
-                <span style="margin-left: 10px;">{{ tarea[4] if tarea[4] else 'Sin fecha' }}</span>
+                <span style="margin-left: 10px;">📅 {{ tarea[4] }}</span>
+                
+                {% if tarea[7] %}
+                    <div style="margin-top: 10px;">
+                        <img src="{{ tarea[7] }}" alt="Imagen tarea" 
+                             style="max-width: 100%; max-height: 150px; border-radius: 8px;">
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     {% endif %}
+
+    <!-- Mostrar últimas tareas agregadas -->
+    {% if ultimas_tareas %}
+        <h3 style="margin-top: 30px;">🆕 Últimas Tareas Agregadas</h3>
+        <div style="display: grid; gap: 15px; margin: 20px 0;">
+            {% for tarea in ultimas_tareas %}
+                <div style="background-color: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="font-size: 16px;">{{ tarea[1] }}</strong>
+                        <span style="padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;
+                                    {% if tarea[3] == 'alta' %}background-color: #fed7d7; color: #c53030;
+                                    {% elif tarea[3] == 'media' %}background-color: #fefcbf; color: #975a16;
+                                    {% else %}background-color: #c6f6d5; color: #276749;{% endif %}">
+                            {% if tarea[3] == 'alta' %}🔴 Alta
+                            {% elif tarea[3] == 'media' %}🟡 Media
+                            {% else %}🟢 Baja{% endif %}
+                        </span>
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        <span style="padding: 2px 8px; border-radius: 4px; font-size: 12px;
+                                    {% if tarea[2] == 'trabajo' %}background-color: #e9d8fd; color: #553c9a;
+                                    {% elif tarea[2] == 'hogar' %}background-color: #bee3f8; color: #2c5282;
+                                    {% else %}background-color: #fbd38d; color: #975a16;{% endif %}">
+                            {% if tarea[2] == 'trabajo' %}💼 Trabajo/Escuela
+                            {% elif tarea[2] == 'hogar' %}🏠 Hogar
+                            {% else %}👤 Personal{% endif %}
+                        </span>
+                        <span style="margin-left: 10px; color: #666; font-size: 12px;">📅 {{ tarea[4] }}</span>
+                        <span style="margin-left: 10px; color: #999; font-size: 12px;">➕ {{ tarea[5] }}</span>
+                    </div>
+                    
+                    {% if tarea[7] %}
+                        <div style="margin-top: 10px;">
+                            <img src="{{ tarea[7] }}" alt="Imagen tarea" 
+                                 style="max-width: 100%; max-height: 150px; border-radius: 8px; cursor: pointer;"
+                                 onclick="window.open(this.src, '_blank')">
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     
-    <div style="text-align: center; margin-top: 30px;">
+    <div style="text-align: center; margin-top: 20px;">
         <a href="/editar">
-            <button>Ir al Gestor de Tareas</button>
+            <button>📋 Ir al Gestor de Tareas</button>
         </a>
     </div>
     
@@ -67,6 +117,7 @@
         <li>Categorizar por prioridad y tipo</li>
         <li>Establecer fechas límite</li>
         <li>Ver progreso de tus actividades</li>
+        <li>📸 Adjuntar imágenes a tus tareas</li>
     </ul>
 
     <br>
