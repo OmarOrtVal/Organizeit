@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Crear Tarea - OrganizeIt{% endblock %}
+{% block content %}
+
+<h2>➕ Crear Nueva Tarea</h2>
+<p>Completa el formulario para agregar una nueva tarea a tu agenda</p>
+
+<div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+    
+    <form method="POST" action="{{ url_for('agregar_tarea') }}" enctype="multipart/form-data">
+        
+        <label for="categoria"><strong>Categoría:</strong></label>
+        <select id="categoria" name="categoria" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="trabajo">💼 Trabajo / Escuela</option>
+            <option value="hogar">🏠 Hogar</option>
+            <option value="personal">👤 Personal</option>
+        </select>
+        
+        <label for="tarea"><strong>Descripción de la Tarea:</strong></label>
+        <textarea id="tarea" name="tarea" rows="3" 
+            placeholder="Describe tu tarea en detalle..." required></textarea>
+        
+        <label for="prioridad"><strong>Prioridad:</strong></label>
+        <select id="prioridad" name="prioridad" required>
+            <option value="">Selecciona prioridad</option>
+            <option value="alta">🔴 Alta - Urgente e importante</option>
+            <option value="media">🟡 Media - Importante pero no urgente</option>
+            <option value="baja">🟢 Baja - Puede esperar</option>
+        </select>
+        
+        <label for="fecha_limite"><strong>Fecha Límite:</strong></label>
+        <input type="date" id="fecha_limite" name="fecha_limite">
+        
+        <!-- Campo para subir imagen -->
+        <label for="imagen"><strong>Imagen (opcional):</strong></label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" style="padding: 5px;">
+        <small style="color: #666;">Formatos permitidos: PNG, JPG, JPEG, GIF, WEBP (Max 16MB)</small>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit">✅ Agregar Tarea</button>
+            <a href="/gestor_tareas">
+                <button type="button" class="btn-secondary">❌ Cancelar</button>
+            </a>
+        </div>
+        
+    </form>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/gestor_tareas">
+        <button class="btn-secondary">📋 Ver todas mis tareas</button>
+    </a>
+</div>
+
+{% endblock %}
