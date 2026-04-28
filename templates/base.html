@@ -8,7 +8,7 @@
         /* Estilos mínimos para mejorar legibilidad */
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -26,7 +26,7 @@
         form {
             margin: 20px 0;
         }
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 8px;
             margin: 5px 0 15px 0;
@@ -51,6 +51,9 @@
         }
         .btn-secondary:hover {
             background-color: #5a6268;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
         }
         .error {
             color: #d32f2f;
@@ -81,6 +84,7 @@
             margin: 0 10px;
             color: #4CAF50;
             text-decoration: none;
+            font-weight: bold;
         }
         nav a:hover {
             text-decoration: underline;
@@ -98,10 +102,14 @@
         <p>Organiza. Prioriza. Cumple.</p>
         <nav>
             <a href="/">Inicio</a>
-            <a href="/editar">Editar Tareas</a>
-            <a href="/login">Iniciar Sesión</a>
-            <a href="/registrar">Registrarse</a>
-            <a href="/logout">Cerrar Sesión</a>
+            {% if user_logged_in %}
+                <a href="/crear_tarea">➕ Crear Tarea</a>
+                <a href="/gestor_tareas">📋 Gestor de Tareas</a>
+                <a href="/logout">🚪 Cerrar Sesión</a>
+            {% else %}
+                <a href="/login">Iniciar Sesión</a>
+                <a href="/registrar">Registrarse</a>
+            {% endif %}
         </nav>
         <hr>
     </header>
