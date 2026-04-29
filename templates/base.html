@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}OrganizeIt - Gestor de Tareas{% endblock %}</title>
     <style>
-        /* Estilos mínimos para mejorar legibilidad */
         body {
             font-family: Arial, sans-serif;
             max-width: 1200px;
@@ -103,9 +102,9 @@
         <nav>
             <a href="/">Inicio</a>
             {% if user_logged_in %}
-                <a href="/crear_tarea">➕ Crear Tarea</a>
-                <a href="/gestor_tareas">📋 Gestor de Tareas</a>
-                <a href="/logout">🚪 Cerrar Sesión</a>
+                <a href="/crear_tarea">Crear Tarea</a>
+                <a href="/gestor_tareas">Gestor de Tareas</a>
+                <a href="/logout">Cerrar Sesión</a>
             {% else %}
                 <a href="/login">Iniciar Sesión</a>
                 <a href="/registrar">Registrarse</a>

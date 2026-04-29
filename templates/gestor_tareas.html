@@ -2,24 +2,23 @@
 {% block title %}Gestor de Tareas - OrganizeIt{% endblock %}
 {% block content %}
 
-<h2>📋 Gestor de Tareas</h2>
+<h2>Gestor de Tareas</h2>
 <p>Aquí puedes ver, filtrar y administrar todas tus tareas</p>
 
 <div style="margin-bottom: 20px;">
     <a href="/crear_tarea">
-        <button>➕ Crear Nueva Tarea</button>
+        <button>Crear Nueva Tarea</button>
     </a>
 </div>
 
-<!-- FILTROS -->
 <div style="background-color: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-    <h3>🔍 Filtrar Tareas</h3>
+    <h3>Filtrar Tareas</h3>
     <label for="filtro_categoria">Categoría:</label>
     <select id="filtro_categoria" onchange="filtrarTareas()" style="width: auto; display: inline; margin-right: 20px;">
         <option value="todas">Todas</option>
-        <option value="trabajo">💼 Trabajo / Escuela</option>
-        <option value="hogar">🏠 Hogar</option>
-        <option value="personal">👤 Personal</option>
+        <option value="trabajo">Trabajo / Escuela</option>
+        <option value="hogar">Hogar</option>
+        <option value="personal">Personal</option>
     </select>
     
     <label for="filtro_prioridad">Prioridad:</label>
@@ -80,12 +79,11 @@
                 </span>
             </div>
             
-            <!-- Mostrar imagen de la tarea si existe -->
             {% if tarea[7] %}
             <div style="margin: 10px 0;">
                 <img src="{{ tarea[7] }}" alt="Imagen de la tarea" 
-                     style="max-width: 100%; max-height: 200px; border-radius: 8px; cursor: pointer;"
-                     onclick="window.open(this.src, '_blank')">
+                    style="max-width: 100%; max-height: 200px; border-radius: 8px; cursor: pointer;"
+                    onclick="window.open(this.src, '_blank')">
             </div>
             {% endif %}
             
@@ -98,24 +96,24 @@
                             {% else %}
                                 background-color: #fbd38d; color: #975a16;
                             {% endif %}">
-                    {% if tarea[2] == 'trabajo' %}💼 Trabajo/Escuela
-                    {% elif tarea[2] == 'hogar' %}🏠 Hogar
-                    {% else %}👤 Personal{% endif %}
+                    {% if tarea[2] == 'trabajo' %}Trabajo/Escuela
+                    {% elif tarea[2] == 'hogar' %}Hogar
+                    {% else %}Personal{% endif %}
                 </span>
                 
                 <span style="background-color: #e2e8f0; padding: 5px 10px; border-radius: 5px; font-size: 12px;">
-                    📅 {{ tarea[4] }}
+                    {{ tarea[4] }}
                 </span>
                 
                 <span style="color: #a0aec0; font-size: 12px; font-style: italic;">
-                    🕒 Creada: {{ tarea[5] }}
+                    Creada: {{ tarea[5] }}
                 </span>
                 
                 <form method="POST" action="{{ url_for('eliminar_tarea', tarea_id=tarea[0]) }}" 
                     style="display: inline; margin-left: auto;" 
                     onsubmit="return confirm('¿Estás seguro de eliminar esta tarea?')">
                     <button type="submit" style="background-color: #f56565; padding: 5px 10px; font-size: 14px; margin: 0;">
-                        🗑️ Eliminar
+                        Eliminar
                     </button>
                 </form>
             </div>
@@ -125,20 +123,20 @@
     
     <div style="text-align: center; margin-top: 30px;">
         <form method="POST" action="{{ url_for('limpiar_agenda') }}" 
-            onsubmit="return confirm('⚠️ ¿Estás seguro de eliminar TODAS las tareas? Esta acción no se puede deshacer.')">
+            onsubmit="return confirm('¿Estás seguro de eliminar TODAS las tareas? Esta acción no se puede deshacer.')">
             <button type="submit" style="background-color: #fc8181; padding: 12px 30px;">
-                🗑️ Limpiar Toda la Agenda
+                Limpiar Toda la Agenda
             </button>
         </form>
     </div>
     
 {% else %}
     <div style="text-align: center; padding: 40px;">
-        <p style="font-size: 1.2em;">📭 No hay tareas registradas</p>
+        <p style="font-size: 1.2em;">No hay tareas registradas</p>
         <p>¡Comienza creando tu primera tarea!</p>
         <br>
         <a href="/crear_tarea">
-            <button>➕ Crear Nueva Tarea</button>
+            <button>Crear Nueva Tarea</button>
         </a>
     </div>
 {% endif %}
