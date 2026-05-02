@@ -47,6 +47,8 @@ https://docs.google.com/forms/d/e/1FAIpQLSfeE1aUapjrOI5aOQjcQmDXnYXFEGPAxZQbkO8C
 #### Fuentes:
 George A. Miller - "The Magical Number Seven, Plus or Minus Two"
 
+Paleta de colores: 
+
 John Wiley & Sons. (2018). Named colors and hex values in HTML. Dummies.com. Recuperado [fecha de consulta: 2 de mayo 2026] de https://www.dummies.com/article/named-colors-and-hex-values-in-html-163158 
 
 UC Berkeley Brand. (2025, 8 de julio). Emergency color guidelines. Recuperado [fecha de consulta: 2 de mayo 2026] de https://brand.berkeley.edu/resources/emergency-color-guidelines/ 
