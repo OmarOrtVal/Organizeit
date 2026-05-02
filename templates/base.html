@@ -4,96 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}OrganizeIt - Gestor de Tareas{% endblock %}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        form {
-            margin: 20px 0;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-        }
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        .btn-primary {
-            background-color: #4CAF50;
-        }
-        .error {
-            color: #d32f2f;
-            background-color: #fde0e0;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-        }
-        .success {
-            color: #2e7d32;
-            background-color: #e8f5e9;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-        }
-        .info {
-            color: #1565c0;
-            background-color: #e3f2fd;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-        }
-        nav {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        nav a {
-            margin: 0 10px;
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #666;
-        }
-    </style>
+<style>
+    /* ===== VARIABLES DE COLOR (Basadas en la tesis) ===== */
+    :root {
+        /* Colores principales */
+        --color-primary: #008000;      /* Verde general - motivación */
+        --color-secondary: #808080;    /* Gris secundario - botones formularios */
+        
+        /* Colores por categoría */
+        --color-home: #0000FF;          /* Azul - Hogar */
+        --color-personal: #FFA500;      /* Naranja - Personal */
+        --color-work: #800080;          /* Morado - Trabajo/Escuela */
+        
+        /* Colores por prioridad */
+        --priority-low: #01C761;         /* Verde - Prioridad baja */
+        --priority-medium: #FFBD2D;      /* Amarillo - Prioridad media */
+        --priority-high: #FF4C40;        /* Rojo - Prioridad alta */
+        
+        /* Colores de estado (mensajes) */
+        --error-bg: #FF4C40;
+        --error-text: white;
+        --success-bg: #01C761;
+        --success-text: white;
+        --info-bg: #0000FF;
+        --info-text: white;
+        
+        /* Colores neutros */
+        --bg-light: #f5f5f5;
+        --white: #ffffff;
+        --text-dark: #333333;
+        --border-color: #dddddd;
+    }
+    
+    /* ===== ESTILOS GLOBALES ===== */
+    body {
+        font-family: 'Poppins', Arial, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+    }
+    
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .container {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    /* ===== FORMULARIOS ===== */
+    form {
+        margin: 20px 0;
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    /* ===== BOTONES ===== */
+    button {
+        background-color: var(--color-primary);
+        color: var(--white);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    button:hover {
+        background-color: #006400; /* Verde más oscuro al hover */
+    }
+    
+    .btn-secondary {
+        background-color: var(--color-secondary);
+    }
+    
+    .btn-secondary:hover {
+        background-color: #6e6e6e;
+    }
+    
+    /* ===== MENSAJES ===== */
+    .error {
+        color: var(--error-text);
+        background-color: var(--error-bg);
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+    }
+    
+    .success {
+        color: var(--success-text);
+        background-color: var(--success-bg);
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+    }
+    
+    .info {
+        color: var(--info-text);
+        background-color: var(--info-bg);
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+    }
+    
+    /* ===== ETIQUETAS DE CATEGORÍA ===== */
+    .category-home {
+        background-color: var(--color-home);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    .category-personal {
+        background-color: var(--color-personal);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    .category-work {
+        background-color: var(--color-work);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    /* ===== ETIQUETAS DE PRIORIDAD ===== */
+    .priority-low {
+        background-color: var(--priority-low);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    .priority-medium {
+        background-color: var(--priority-medium);
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    .priority-high {
+        background-color: var(--priority-high);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    /* ===== NAVEGACIÓN ===== */
+    nav {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    nav a {
+        margin: 0 10px;
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    nav a:hover {
+        text-decoration: underline;
+    }
+    
+    /* ===== PIE DE PÁGINA ===== */
+    footer {
+        text-align: center;
+        margin-top: 50px;
+        color: var(--color-secondary);
+    }
+    
+    hr {
+        border-color: var(--border-color);
+    }
+</style>
 </head>
 <body>
     <header>
