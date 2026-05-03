@@ -201,8 +201,7 @@
 </head>
 <body>
     <header>
-        <h1>OrganizeIt</h1>
-        <p>Organiza. Prioriza. Cumple.</p>
+        <img src="{{ url_for('static', filename='img/OrganizeIt.png') }}" alt="Logo" width="300" height="300">
         <nav>
             <a href="/">Inicio</a>
             {% if user_logged_in %}
