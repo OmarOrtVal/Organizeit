@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2026 a las 19:06:45
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.0.28
+-- Tiempo de generación: 03-05-2026 a las 22:19:54
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,13 +38,6 @@ CREATE TABLE `tareas` (
   `completada` tinyint(1) DEFAULT 0,
   `imagen_url` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tareas`
---
-
-INSERT INTO `tareas` (`id_tarea`, `nombre_tarea`, `categoria`, `prioridad`, `fecha_limite`, `usuario_email`, `fecha_creacion`, `completada`, `imagen_url`) VALUES
-(45, 'tarea', 'personal', 'media', '2026-06-14', 'omar@correo.com', '2026-04-28 17:05:35', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -96,7 +89,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
