@@ -1,6 +1,6 @@
 # Equipo 3
 # Omar Daniel Ortega Valtierra  contraseña:123456
-# Miguel Angel Pineda Becerra
+# Miguel Angel Pineda Becerra  contraseña : 456789
 # 6D
 #### Tesis: 
 https://1drv.ms/w/c/9835c92adf5dc840/IQA-TKgTx6_WS4YXTQEdm2S9AWOuuOx_Yp2NvrEEsSYQcm4?e=5S2Rzi
