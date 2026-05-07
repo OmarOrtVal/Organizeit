@@ -10,6 +10,7 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### Tipo de app: Escritorio 
 ### ORDEN DE CREACIÓN 
 ### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
+# EXTENDER LA JUSTIFICACION
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.5 Arquitectura
     2.6 Diagrama de flujo
