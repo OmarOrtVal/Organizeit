@@ -18,7 +18,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
     3.3 Backend (Flask)
     3.4 Frontend (HTML)
     3.5 Persistencia de datos
-    3.6 Capturas de pantalla
    ####  CAPÍTULO 4: PRUEBAS Y RESULTADOS
    ## Error de la conexion a la base de datos de tareas
     4.1 Metodología
