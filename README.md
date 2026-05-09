@@ -12,10 +12,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.5 Arquitectura
-   ####  CAPÍTULO 3: DESARROLLO
-    3.3 Backend (Flask)
-    3.4 Frontend (HTML)
-    3.5 Persistencia de datos
    ####  CAPÍTULO 4: PRUEBAS Y RESULTADOS
    ## Error de la conexion a la base de datos de tareas
     4.1 Metodología
