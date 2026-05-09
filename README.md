@@ -27,6 +27,7 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### 7. Presentación: Objetivos generales y lo que esperas ofrecer 
 ### 8. Epígrafes: Frases cortas al inicio de cada capítulo 
 ### 10. Índice: Se genera automáticamente AL FINAL 
+### INDICE DE FIGURAS
 ### 11. Anexos: Código, capturas, manual de usuario 
 ### 12. Glosario: Definición de términos técnicos 
 ### 13. Bibliografía: Fuentes que consultaste 
