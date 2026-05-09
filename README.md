@@ -13,7 +13,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.5 Arquitectura
    ####  CAPÍTULO 3: DESARROLLO
-    3.1 Tecnologías
     3.2 Estructura del proyecto
     3.3 Backend (Flask)
     3.4 Frontend (HTML)
