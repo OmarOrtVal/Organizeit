@@ -14,8 +14,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
     2.5 Arquitectura
    ####  CAPÍTULO 4: PRUEBAS Y RESULTADOS
    ## Error de la conexion a la base de datos de tareas
-    4.1 Metodología
-    4.2 Escenarios de prueba
     4.3 Resultados
     4.4 Evaluación con usuarios
     4.5 Mejoras identificadas
