@@ -12,8 +12,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.5 Arquitectura
-   ####  CAPÍTULO 4: PRUEBAS Y RESULTADOS
-    4.4 Evaluación con usuarios
 ### 2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
 ### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
 ### 4. Justificación: Explicas por qué vale la pena tu proyecto 
