@@ -45,7 +45,7 @@
         <div class="tarea-card" 
             data-categoria="{{ tarea[2] }}" 
             data-prioridad="{{ tarea[3] }}"
-            data-completada="{{ tarea[6] }}"
+            data-completada="{{ 'true' if tarea[6] else 'false' }}" 
             style="background-color: {% if tarea[6] %}#f0f0f0{% else %}white{% endif %}; 
                     border: 2px solid #e2e8f0; 
                     border-left: 5px solid {% if tarea[3] == 'alta' %}#c53030{% elif tarea[3] == 'media' %}#d69e2e{% else %}#38a169{% endif %}; 
