@@ -14,10 +14,8 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
     2.5 Arquitectura
 ### 2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
 ### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
-### 5. Prólogo: Cuentas tus motivos personales y agradeces 
 ### 10. Índice: Se genera automáticamente AL FINAL 
 ### INDICE DE FIGURAS
-### 11. Anexos: Manual de usuario 
 ### 12. Glosario: Definición de términos técnicos 
 ### 13. Bibliografía: Fuentes que consultaste 
 
