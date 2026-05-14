@@ -143,29 +143,36 @@
 
 <script>
     function filtrarTareas() {
-        const categoria = document.getElementById('filtro_categoria').value;
-        const prioridad = document.getElementById('filtro_prioridad').value;
-        const estado = document.getElementById('filtro_estado').value;
-        const tareas = document.querySelectorAll('.tarea-card');
+    const categoria = document.getElementById('filtro_categoria').value;
+    const prioridad = document.getElementById('filtro_prioridad').value;
+    const estado = document.getElementById('filtro_estado').value;
+    const tareas = document.querySelectorAll('.tarea-card');
+    
+    tareas.forEach(tarea => {
+        const cat = tarea.dataset.categoria;
+        const pri = tarea.dataset.prioridad;
         
-        tareas.forEach(tarea => {
-            const cat = tarea.dataset.categoria;
-            const pri = tarea.dataset.prioridad;
-            const comp = tarea.dataset.completada === 'True';
-            
-            const matchCategoria = categoria === 'todas' || cat === categoria;
-            const matchPrioridad = prioridad === 'todas' || pri === prioridad;
-            
-            let matchEstado = true;
-            if (estado === 'pendientes') {
-                matchEstado = !comp;
-            } else if (estado === 'completadas') {
-                matchEstado = comp;
-            }
-            
-            tarea.style.display = matchCategoria && matchPrioridad && matchEstado ? 'block' : 'none';
-        });
-    }
+        let comp = false;
+        const completadaRaw = tarea.dataset.completada;
+        
+        if (completadaRaw === 'true' || completadaRaw === 'True' || completadaRaw === '1' || completadaRaw === 1) {
+            comp = true;
+        } else if (completadaRaw === 'false' || completadaRaw === 'False' || completadaRaw === '0' || completadaRaw === 0) {
+            comp = false;
+        }
+        
+        const matchCategoria = categoria === 'todas' || cat === categoria;
+        const matchPrioridad = prioridad === 'todas' || pri === prioridad;
+        
+        let matchEstado = true;
+        if (estado === 'pendientes') {
+            matchEstado = !comp;  
+        } else if (estado === 'completadas') {
+            matchEstado = comp;   
+        }        
+        tarea.style.display = matchCategoria && matchPrioridad && matchEstado ? 'block' : 'none';
+    });
+}
     
     function toggleTarea(id) {
         fetch(`/toggle_tarea/${id}`, { method: 'POST' })
