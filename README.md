@@ -16,8 +16,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
 ### 4. Índice: Se genera automáticamente AL FINAL 
 ### 5. INDICE DE FIGURAS
-### 6. Glosario: Definición de términos técnicos 
-### 7. Bibliografía: Fuentes que consultaste 
 
 #### Encuesta:
 https://docs.google.com/forms/d/e/1FAIpQLSfeE1aUapjrOI5aOQjcQmDXnYXFEGPAxZQbkO8C5TbJ-S-9vg/viewform?usp=publish-editor
