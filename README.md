@@ -17,7 +17,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ¿Se cumplieron los 3 específicos? 
 ¿Qué aprendieron? 
 Trabajo futuro: 
-### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
 ### ACTUALIZAR LOS INDICES 
 
 #### Encuesta:
