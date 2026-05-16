@@ -13,6 +13,10 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
   #### CAPÍTULO 2: DISEÑO DEL SISTEMA
     2.5 Arquitectura
 ### 2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
+¿Se cumplió el objetivo general? 
+¿Se cumplieron los 3 específicos? 
+¿Qué aprendieron? 
+Trabajo futuro: 
 ### 3. Introducción: Al final, cuando ya sabes exactamente qué hiciste 
 ### ACTUALIZAR LOS INDICES 
 
