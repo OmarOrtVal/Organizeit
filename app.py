@@ -127,18 +127,10 @@ def index():
 
 @app.route('/crear_tarea')
 def crear_tarea():
-    if 'user_email' not in session:
-        flash('Debes iniciar sesión para crear tareas', 'error')
-        return redirect(url_for('login'))
-    
     return render_template('crear_tarea.html')
 
 @app.route('/gestor_tareas')
 def gestor_tareas():
-    if 'user_email' not in session:
-        flash('Debes iniciar sesión para gestionar tareas', 'error')
-        return redirect(url_for('login'))
-    
     try:
         cursor = mysql.connection.cursor()
         
@@ -165,10 +157,7 @@ def gestor_tareas():
         return render_template('gestor_tareas.html', tareas=[])
 
 @app.route('/agregar_tarea', methods=['POST'])
-def agregar_tarea():
-    if 'user_email' not in session:
-        return redirect(url_for('login'))
-    
+def agregar_tarea():    
     try:
         tarea_texto = request.form.get('tarea')
         categoria = request.form.get('categoria')
@@ -207,9 +196,6 @@ def agregar_tarea():
 
 @app.route('/eliminar_tarea/<int:tarea_id>', methods=['POST'])
 def eliminar_tarea(tarea_id):
-    if 'user_email' not in session:
-        return redirect(url_for('login'))
-    
     try:
         cursor = mysql.connection.cursor()
         
@@ -243,9 +229,6 @@ def eliminar_tarea(tarea_id):
 
 @app.route('/limpiar_agenda', methods=['POST'])
 def limpiar_agenda():
-    if 'user_email' not in session:
-        return redirect(url_for('login'))
-    
     try:
         cursor = mysql.connection.cursor()
         
@@ -278,9 +261,6 @@ def limpiar_agenda():
 
 @app.route('/toggle_tarea/<int:tarea_id>', methods=['POST'])
 def toggle_tarea(tarea_id):
-    if 'user_email' not in session:
-        return jsonify({'success': False, 'error': 'No autorizado'})
-    
     try:
         cursor = mysql.connection.cursor()
         
