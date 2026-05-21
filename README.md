@@ -9,14 +9,6 @@ https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sha
 ### Nombre de la app: Organizelt
 ### Tipo de app: Escritorio 
 ### ORDEN DE CREACIÓN 
-### 1. Cuerpo del texto: Programas tu app y escribes los 4 capítulos 
-  #### CAPÍTULO 2: DISEÑO DEL SISTEMA
-    2.5 Arquitectura
-### 2. Conclusiones: Una vez que terminas el cuerpo, escribes qué aprendiste 
-¿Se cumplió el objetivo general? 
-¿Se cumplieron los 3 específicos? 
-¿Qué aprendieron? 
-Trabajo futuro: 
 ### ACTUALIZAR LOS INDICES 
 
 #### Encuesta:
