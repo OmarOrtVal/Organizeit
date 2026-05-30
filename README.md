@@ -3,6 +3,7 @@
 # Miguel Angel Pineda Becerra  contraseña : 456789
 # 6D
 #### Tesis: 
+https://1drv.ms/w/c/9835c92adf5dc840/IQBNpKnH7k27Q76fky8iKpIIARX5h_USgQ-VDqnZv4yyhRU?e=Ccoe4u
 #### Documentos de apoyo:
 https://drive.google.com/drive/folders/1OPULFlyGIWMo1YfgOj6AX4fabAyywrZc?usp=sharing
 
