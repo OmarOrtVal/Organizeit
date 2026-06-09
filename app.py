@@ -54,14 +54,8 @@ def crear_tablas():
             )
         ''')
         
-        try:
-            cursor.execute('ALTER TABLE tareas ADD COLUMN imagen_url TEXT')
-            print("Columna imagen_url añadida exitosamente")
-        except Exception:
-            pass  
-        
         mysql.connection.commit()
-        print("Tablas creadas/actualizadas exitosamente")
+        print("Tablas creadas/verificadas exitosamente")
     except Exception as e:
         print(f"Error creando tablas: {e}")
 
@@ -384,6 +378,8 @@ def inject_user():
         'user_logged_in': 'user_email' in session,
         'user_nombre': session.get('user_nombre', 'Invitado')
     }
+
+crear_tablas()
 
 if __name__ == '__main__':
     app.run(debug=True)
