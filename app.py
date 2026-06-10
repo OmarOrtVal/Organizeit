@@ -4,8 +4,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
+import sys
+import os
 
-app = Flask(__name__)
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    static_folder = os.path.join(sys._MEIPASS, 'static')
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+else:
+    app = Flask(__name__)
+
 app.secret_key = 'organizeit_secret_key_2024'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -385,5 +393,12 @@ def inject_user():
         'user_nombre': session.get('user_nombre', 'Invitado')
     }
 
+import webbrowser
+
 if __name__ == '__main__':
-    main()
+    with app.app_context():
+        crear_tablas()
+    
+    webbrowser.open('http://127.0.0.1:5000')
+    
+    app.run(debug=False, host='127.0.0.1', port=5000)
