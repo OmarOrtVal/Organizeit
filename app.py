@@ -386,4 +386,11 @@ def inject_user():
     }
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import webbrowser
+    import threading
+    
+    def abrir_navegador():
+        webbrowser.open('http://127.0.0.1:5000')
+    
+    threading.Timer(1.5, abrir_navegador).start()
+    app.run(debug=False, host='127.0.0.1', port=5000)
