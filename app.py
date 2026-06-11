@@ -1,19 +1,36 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify, send_from_directory
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
 import sys
-import os
+import webbrowser
+import threading
 
-if getattr(sys, 'frozen', False):
-    template_folder = os.path.join(sys._MEIPASS, 'templates')
-    static_folder = os.path.join(sys._MEIPASS, 'static')
+# ==================== CONFIGURACIÓN DE RUTAS ====================
+def es_ejecutable():
+    return getattr(sys, 'frozen', False)
+
+if es_ejecutable():
+    # Estamos en .exe
+    base_path = sys._MEIPASS
+    template_folder = os.path.join(base_path, 'templates')
+    static_folder = os.path.join(base_path, 'static')
     app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+    
+    # Carpeta de uploads: junto al .exe
+    exe_dir = os.path.dirname(sys.executable)
+    upload_dir = os.path.join(exe_dir, 'uploads')
 else:
+    # Estamos en desarrollo
     app = Flask(__name__)
+    upload_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 
+# Crear carpeta de uploads si no existe
+os.makedirs(upload_dir, exist_ok=True)
+
+# ==================== CONFIGURACIÓN DE LA APP ====================
 app.secret_key = 'organizeit_secret_key_2024'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -21,11 +38,9 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'organizeit'
 
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = upload_dir
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 mysql = MySQL(app)
 
@@ -73,6 +88,12 @@ def crear_tablas():
     except Exception as e:
         print(f"Error creando tablas: {e}")
 
+# ==================== RUTA PARA SERVIR IMÁGENES ====================
+@app.route('/uploads/<filename>')
+def servir_imagen(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+# ==================== RUTAS DE LA APLICACIÓN ====================
 @app.route('/')
 def index():
     if 'user_email' in session:
@@ -173,14 +194,19 @@ def agregar_tarea():
         fecha_limite = request.form.get('fecha_limite')
         
         imagen_url = None
+        
         if 'imagen' in request.files:
             archivo = request.files['imagen']
             if archivo and archivo.filename and allowed_file(archivo.filename):
                 timestamp = datetime.now().timestamp()
                 filename = secure_filename(f"{session['user_email']}_{timestamp}_{archivo.filename}")
+                
+                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+                
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 archivo.save(filepath)
-                imagen_url = url_for('static', filename=f'uploads/{filename}')
+                
+                imagen_url = f'/uploads/{filename}'
         
         if not all([tarea_texto, categoria, prioridad]):
             flash('Por favor completa todos los campos obligatorios', 'error')
@@ -220,10 +246,10 @@ def eliminar_tarea(tarea_id):
         
         if resultado and resultado[0]:
             try:
-                imagen_path = resultado[0].replace(url_for('static', filename=''), '')
-                imagen_path = os.path.join('static', imagen_path)
-                if os.path.exists(imagen_path):
-                    os.remove(imagen_path)
+                filename = os.path.basename(resultado[0])
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                if os.path.exists(filepath):
+                    os.remove(filepath)
             except Exception:
                 pass  
         
@@ -252,10 +278,10 @@ def limpiar_agenda():
         for imagen in imagenes:
             if imagen[0]:
                 try:
-                    imagen_path = imagen[0].replace(url_for('static', filename=''), '')
-                    imagen_path = os.path.join('static', imagen_path)
-                    if os.path.exists(imagen_path):
-                        os.remove(imagen_path)
+                    filename = os.path.basename(imagen[0])
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    if os.path.exists(filepath):
+                        os.remove(filepath)
                 except Exception:
                     pass  
         
@@ -393,12 +419,11 @@ def inject_user():
         'user_nombre': session.get('user_nombre', 'Invitado')
     }
 
-import webbrowser
-
+# ==================== INICIO DE LA APLICACIÓN ====================
 if __name__ == '__main__':
     with app.app_context():
         crear_tablas()
     
-    webbrowser.open('http://127.0.0.1:5000')
+    threading.Timer(1, lambda: webbrowser.open('http://127.0.0.1:5000')).start()
     
     app.run(debug=False, host='127.0.0.1', port=5000)
