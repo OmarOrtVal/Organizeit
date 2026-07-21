@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-05-2026 a las 17:38:31
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.0.28
+-- Tiempo de generación: 21-07-2026 a las 15:45:17
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,14 +54,6 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `contraseña`, `fecha_registro`) VALUES
-(6, 'Omar Ortega', 'omar@correo.com', 'scrypt:32768:8:1$thnxfMQcqvVykISc$9a50629d2114486c607c323f3a38497fc71e3ecab638b313c644656ec62fdd8696f4cd6246ca53a776971ada8ab9d0ecd29e801360edefa8f4df456f6365b1cd', '2026-04-28 16:35:49'),
-(7, 'Miguel Pineda', 'Miguel@correo.com', 'scrypt:32768:8:1$tRifsmriLE71MW09$54989cb1465151258711a866c6dd81387bb4376508999ce4f7945bc0d074ae7d02e333c6c71289f21d22224f9210cce8800a04db435cb32e3a4e00f3b6b30332', '2026-05-06 15:37:54');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -96,7 +88,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
