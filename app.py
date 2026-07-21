@@ -8,7 +8,6 @@ import sys
 import webbrowser
 import threading
 
-# ==================== CONFIGURACIÓN DE RUTAS ====================
 def es_ejecutable():
     return getattr(sys, 'frozen', False)
 
@@ -30,7 +29,6 @@ else:
 # Crear carpeta de uploads si no existe
 os.makedirs(upload_dir, exist_ok=True)
 
-# ==================== CONFIGURACIÓN DE LA APP ====================
 app.secret_key = 'organizeit_secret_key_2024'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -88,12 +86,10 @@ def crear_tablas():
     except Exception as e:
         print(f"Error creando tablas: {e}")
 
-# ==================== RUTA PARA SERVIR IMÁGENES ====================
 @app.route('/uploads/<filename>')
 def servir_imagen(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-# ==================== RUTAS DE LA APLICACIÓN ====================
 @app.route('/')
 def index():
     if 'user_email' in session:
@@ -419,7 +415,6 @@ def inject_user():
         'user_nombre': session.get('user_nombre', 'Invitado')
     }
 
-# ==================== INICIO DE LA APLICACIÓN ====================
 if __name__ == '__main__':
     with app.app_context():
         crear_tablas()
